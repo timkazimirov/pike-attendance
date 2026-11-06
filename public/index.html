@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a0e19">
+  <meta name="robots" content="noindex">
+  <title>ΠΚΑ Iota Pi · Check In</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body class="checkin">
+  <main class="shell">
+    <header class="crest">
+      <div class="letters" aria-label="Pi Kappa Alpha">ΠΚΑ</div>
+      <div class="chapter">Iota Pi · UCLA</div>
+    </header>
+
+    <section id="view" class="card" aria-live="polite">
+      <div class="state"><span class="spinner" aria-hidden="true"></span></div>
+    </section>
+
+    <footer class="foot">Chapter attendance</footer>
+  </main>
+
+  <template id="tpl-idle">
+    <div class="state">
+      <div class="state-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>
+          <path d="M14 14h3v3M21 14v.01M14 21h.01M17.5 21H21v-3.5"/>
+        </svg>
+      </div>
+      <h1>Check in at the meeting</h1>
+      <p class="muted">Scan the QR code on screen with your phone's camera to mark yourself present.</p>
+    </div>
+  </template>
+
+  <template id="tpl-loading">
+    <div class="state">
+      <span class="spinner" aria-hidden="true"></span>
+      <p class="muted">Checking your code…</p>
+    </div>
+  </template>
+
+  <template id="tpl-form">
+    <p class="eyebrow">Checking in to</p>
+    <h1 data-event></h1>
+    <p class="muted" data-date></p>
+    <form novalidate>
+      <label for="name">Your full name</label>
+      <input id="name" name="name" autocomplete="name" autocapitalize="words" autocorrect="off" spellcheck="false"
+             enterkeyhint="go" placeholder="First Last" maxlength="60" required>
+      <datalist id="roster"></datalist>
+      <p class="msg" data-msg role="alert"></p>
+      <button type="submit" class="btn primary big">Attend</button>
+    </form>
+  </template>
+
+  <template id="tpl-done">
+    <div class="state done">
+      <div class="check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h1 data-title></h1>
+      <p class="who" data-name></p>
+      <p class="muted" data-event></p>
+      <p class="muted" data-time></p>
+    </div>
+  </template>
+
+  <template id="tpl-error">
+    <div class="state">
+      <div class="state-icon warn" aria-hidden="true">!</div>
+      <h1 data-title></h1>
+      <p class="muted" data-msg></p>
+      <button class="btn" type="button" data-retry hidden>Try again</button>
+    </div>
+  </template>
+
+  <script src="/config.js"></script>
+  <script src="/common.js"></script>
+  <script src="/checkin.js"></script>
+</body>
+</html>

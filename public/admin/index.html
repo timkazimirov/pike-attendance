@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4a0e19">
+  <meta name="robots" content="noindex">
+  <title>ΠΚΑ Attendance · Admin</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body class="admin">
+  <header class="topbar">
+    <a class="brand" href="#/"><span class="letters">ΠΚΑ</span><span>Attendance</span></a>
+    <nav class="topnav">
+      <a id="sheet-link" class="toplink" target="_blank" rel="noopener" hidden>Google Sheet ↗</a>
+      <button id="logout" class="toplink" type="button" hidden>Log out</button>
+    </nav>
+  </header>
+
+  <main id="app" class="wrap"></main>
+
+  <div id="present" class="present" hidden>
+    <button class="present-close" type="button" data-close>Close (Esc)</button>
+    <div class="present-qr">
+      <div class="qr-card">
+        <svg id="qr" viewBox="0 0 29 29" shape-rendering="crispEdges" role="img" aria-label="Check-in QR code">
+          <path fill="#000"/>
+        </svg>
+        <div class="qr-closed" data-p-closed hidden>Check-in closed</div>
+      </div>
+      <div class="qr-timer" title="Code refreshes automatically"><span></span></div>
+    </div>
+    <div class="present-info">
+      <div class="letters">ΠΚΑ</div>
+      <h2 data-p-event></h2>
+      <p class="present-date" data-p-date></p>
+      <p class="present-cta" data-p-cta>Scan with your phone camera to check in</p>
+      <p class="present-count"><span data-p-count>0</span>checked in</p>
+      <ul class="present-recent" data-p-recent></ul>
+    </div>
+  </div>
+
+  <template id="tpl-login">
+    <section class="panel narrow">
+      <h1>Officer login</h1>
+      <p class="muted">Use the admin password set in the Google Sheet.</p>
+      <form id="login-form">
+        <label for="pw">Password</label>
+        <input id="pw" type="password" autocomplete="current-password" required>
+        <p class="msg" data-msg role="alert"></p>
+        <button class="btn primary big" type="submit">Log in</button>
+      </form>
+    </section>
+  </template>
+
+  <template id="tpl-dashboard">
+    <section class="panel">
+      <h2>New event</h2>
+      <form id="new-event" class="row-form">
+        <div class="field grow">
+          <label for="ev-name">Name</label>
+          <input id="ev-name" value="Chapter Meeting" maxlength="80" required>
+        </div>
+        <div class="field">
+          <label for="ev-date">Date</label>
+          <input id="ev-date" type="date" required>
+        </div>
+        <button class="btn primary" type="submit">Create event</button>
+      </form>
+      <p class="msg" data-msg role="alert"></p>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Events</h2></div>
+      <div id="events" class="event-list"><p class="muted">Loading…</p></div>
+    </section>
+  </template>
+
+  <template id="tpl-event">
+    <a class="back" href="#/">← All events</a>
+    <section class="panel event-head">
+      <div>
+        <p class="eyebrow" data-date></p>
+        <h1 data-name>Loading…</h1>
+        <span class="pill" data-status hidden></span>
+      </div>
+      <div class="event-actions">
+        <button class="btn primary" type="button" data-present disabled>Show QR code</button>
+        <button class="btn" type="button" data-toggle disabled>Close check-in</button>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head">
+        <h2><span data-count>0</span> checked in</h2>
+        <button class="btn small" type="button" data-csv>Download CSV</button>
+      </div>
+      <form class="row-form" data-add>
+        <div class="field grow">
+          <label for="add-name">Add someone manually</label>
+          <input id="add-name" placeholder="First Last" maxlength="60" autocomplete="off">
+        </div>
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <p class="msg" data-msg role="alert"></p>
+      <ol class="attendees" data-list></ol>
+      <p class="muted empty" data-empty hidden>No one yet. Hit “Show QR code” and put it on the projector.</p>
+    </section>
+    <div class="danger-zone">
+      <button class="btn danger small" type="button" data-delete>Delete event</button>
+    </div>
+  </template>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script src="/config.js"></script>
+  <script src="/common.js"></script>
+  <script src="/admin.js"></script>
+</body>
+</html>
